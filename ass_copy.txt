@@ -1,0 +1,72 @@
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CSharp_Assignment
+{
+    abstract class Employee
+    {
+        int id;
+        string name;
+        string address;
+        int pay;
+        public abstract int calculateSal();
+
+       public int payy()
+        {
+            return this.pay;
+        }
+
+        public Employee(int id, string name, string address, int pay)
+        {
+            this.id = id;
+            this.name = name;
+            this.address = address;
+            this.pay = pay;
+        }
+        public override string  ToString()
+        {
+            return this.id + " " + this.name;
+        }
+    }
+    class Technical : Employee
+    {
+        string[] skill;
+        public Technical(string[] s, int id,
+                  string name, string address, int pay) : base(id, name, address, pay)
+        {
+            skill = s;
+        }
+        public override int calculateSal()
+        {
+            return this.payy()
+                
+                + (int)(.12 * this.payy());
+        }
+    }
+    class Staff : Employee
+    {
+        string title;
+        public Staff(string staf, int id,
+                  string name, string address, int pay) : base(id, name, address, pay)
+        {
+            title = staf;
+        }
+        public override int calculateSal()
+        {
+            return this.payy() + (int)(.18 * this.payy());
+        }
+    }
+    public class UsingPeople
+    {
+        public static void Main()
+        {
+            Staff s = new Staff("cse", 1, "a", "indore", 20);
+            Console.WriteLine(s.ToString());
+            Technical t = new Technical(new string[] { "c++", "java" }, 2, "kate", "bhopal", 30);
+            Console.WriteLine(t.ToString());
+            Console.WriteLine(t.calculateSal());
+        }
+    }
+}
