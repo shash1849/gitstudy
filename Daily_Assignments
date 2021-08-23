@@ -1,1 +1,276 @@
+create procedure editDeptDetails(@deptno int, @loc varchar(30))
+as
+begin
+update DEPT set loc=@loc from dept where deptno=@deptno
+end
 
+exec editDeptDetails 10,'manali'
+
+
+
+
+
+
+2.
+
+alter procedure getDetailsByempno(@empno int)
+as
+begin
+SELECT sal from emp where empno = @empno
+end
+
+exec getDetailsByempno 7369
+
+3.
+
+alter procedure countEmp(@deptno int)
+as
+begin
+SELECT count(*) as result from EMP where deptno = @deptno
+end
+
+exec countEmp 10
+
+4.
+
+CREATE procedure getMinAndMaxSalary(@deptno int)
+as
+begin
+SELECT min(sal) as MINIMUM_SALARY , max(sal) as MAXIMUM_SALARY from EMP where deptno = @deptno
+end
+
+exec getMinAndMaxSalary 20
+
+
+------------------------------------------------------------------------------------------
+
+
+use [AugETG+2021]
+
+declare @name varchar(10)
+set @name='sheela'
+print @name
+go
+
+SELECT CEILING(25.75) AS CeilValue;
+--26
+SELECT FLOOR(3.63) Result;
+--3
+select rand(.009);
+--same for a particular value
+SELECT ROUND(125.315, 2);
+
+SELECT ROUND(125.315, 2, 1);
+
+SELECT ROUND(125.315, 2, 0);
+
+SELECT SQRT(64) ;
+
+SELECT ASCII('A') AS A, ASCII('B') AS B;
+
+SELECT ASCII(1) AS [1], ASCII(2) AS [2];  
+
+SELECT char(9);
+
+SELECT CONCAT ( 'Happy ', 'Rakhi ', 22, '/', '08' ) AS Result;
+
+SELECT LEFT('abcdefg',2); 
+
+SELECT len('happy');
+
+SELECT LOWER ( 'LAKNWCI' );
+
+SELECT LTRIM('     Five spaces');
+
+SELECT REPLACE('abcdefghiYYY','YYY','xxx')
+
+SELECT REPLICATE (' string',3) ;
+
+SELECT RIGHT ( 'charac' , 3 );
+
+SELECT SUBSTRING ( 'expression' , 0 , 5 )
+
+SELECT @timeTo AS 'time(1)'
+
+
+----------------------------------------------------------------------------------------------------------
+
+use [AugETG+2021]
+
+
+--CREATE DATABASE Training
+--USE Training
+
+CREATE TABLE DEPT (
+ DEPTNO              int NOT NULL,
+ DNAME               VARCHAR(14),
+ LOC                 VARCHAR(13),
+ CONSTRAINT DEPT_PRIMARY_KEY PRIMARY KEY (DEPTNO));
+INSERT INTO DEPT VALUES (10,'ACCOUNTING','NEW YORK');
+INSERT INTO DEPT VALUES (20,'RESEARCH','DALLAS');
+INSERT INTO DEPT VALUES (30,'SALES','CHICAGO');
+INSERT INTO DEPT VALUES (40,'OPERATIONS','BOSTON');
+CREATE TABLE EMP (
+ EMPNO               int NOT NULL,
+ ENAME               VARCHAR(10),
+ JOB                 VARCHAR(9),
+ MGR                 int CONSTRAINT EMP_SELF_KEY REFERENCES EMP (EMPNO),
+ HIREDATE            DATE,
+ SAL                 int,
+ COMM                int,
+ DEPTNO              int NOT NULL,
+ CONSTRAINT EMP_FOREIGN_KEY FOREIGN KEY (DEPTNO) REFERENCES DEPT (DEPTNO),
+ CONSTRAINT EMP_PRIMARY_KEY PRIMARY KEY (EMPNO));
+INSERT INTO EMP VALUES (7839,'KING','PRESIDENT',NULL,'17-NOV-81',5000,NULL,10);
+INSERT INTO EMP VALUES (7698,'BLAKE','MANAGER',7839,'1-MAY-81',2850,NULL,30);
+INSERT INTO EMP VALUES (7782,'CLARK','MANAGER',7839,'9-JUN-81',2450,NULL,10);
+INSERT INTO EMP VALUES (7566,'JONES','MANAGER',7839,'2-APR-81',2975,NULL,20);
+INSERT INTO EMP VALUES (7654,'MARTIN','SALESMAN',7698,'28-SEP-81',1250,1400,30);
+INSERT INTO EMP VALUES (7499,'ALLEN','SALESMAN',7698,'20-FEB-81',1600,300,30);
+INSERT INTO EMP VALUES (7844,'TURNER','SALESMAN',7698,'8-SEP-81',1500,0,30);
+INSERT INTO EMP VALUES (7900,'JAMES','CLERK',7698,'3-DEC-81',950,NULL,30);
+INSERT INTO EMP VALUES (7521,'WARD','SALESMAN',7698,'22-FEB-81',1250,500,30);
+INSERT INTO EMP VALUES (7902,'FORD','ANALYST',7566,'3-DEC-81',3000,NULL,20);
+INSERT INTO EMP VALUES (7369,'SMITH','CLERK',7902,'17-DEC-80',800,NULL,20);
+INSERT INTO EMP VALUES (7788,'SCOTT','ANALYST',7566,'09-DEC-82',3000,NULL,20);
+INSERT INTO EMP VALUES (7876,'ADAMS','CLERK',7788,'12-JAN-83',1100,NULL,20);
+INSERT INTO EMP VALUES (7934,'MILLER','CLERK',7782,'23-JAN-82',1300,NULL,10);
+
+
+create procedure GetDetails
+as
+begin
+SELECT empno,ename,sal,job from emp
+end
+
+exec GetDetails
+
+alter procedure getDetailsByempno(@empno int)
+as
+begin
+SELECT sal from emp where empno = @empno
+end
+
+exec getDetailsByempno 7369
+
+create procedure AddDept(@deptno int,@dname varchar(20),@loc varchar(30))
+as
+begin
+insert into dept values(@deptno,@dname,@loc)
+end
+
+exec AddDept 50,'JAVA','Indore'
+
+select * from dept
+select * from emp
+
+alter procedure deleteDeptDetails(@deptno int)
+as
+begin
+DELETE from dept where deptno = @deptno
+end
+
+exec deleteDeptDetails 10
+
+create procedure editDeptDetails(@deptno int, @loc varchar(30))
+as
+begin
+update DEPT set loc=@loc from dept where deptno=@deptno
+end
+
+exec editDeptDetails 10,'manali'
+
+select * from dept
+
+alter procedure countEmp(@deptno int)
+as
+begin
+SELECT count(*) as result from EMP where deptno = @deptno
+end
+
+exec countEmp 10
+
+
+CREATE procedure getMinAndMaxSalary(@deptno int)
+as
+begin
+SELECT min(sal) as MINIMUM_SALARY , max(sal) as MAXIMUM_SALARY from EMP where deptno = @deptno
+end
+
+exec getMinAndMaxSalary 20
+
+create function getNameByID(@empno int)
+returns varchar(50)
+begin
+declare @name varchar(50)
+select @name=ename from emp where empno=@empno
+return @name
+end
+
+select dbo.getNameByID(7369)
+--kate
+
+alter procedure getDetailsByempno(@empno int)
+as
+begin
+SELECT sal from emp where empno = @empno
+end
+
+exec getDetailsByempno 7369
+
+--kate
+
+alter function getSalaryByID(@empno int)
+returns int
+begin
+declare @salary int
+select @salary=sal from emp where empno=@empno
+return @salary*12
+end
+
+select dbo.getSalaryByID(7369)
+
+--kate
+
+create function getCount(@deptno int)
+returns int
+begin
+declare @countt int
+select @countt=count(*) from emp where deptno=@deptno
+return @countt
+end
+
+select dbo.getCount(20)
+--kate
+create function getEmpByDept(@deptno int)
+returns table
+AS
+RETURN
+(
+	select * from emp where deptno=@deptno
+);
+
+select * from getEmpByDept(10)
+--kate
+
+create function getEmpByMgr(@mgrid int)
+returns table
+AS
+RETURN
+(
+	select ename from emp where mgr=@mgrid
+);
+
+select * from getEmpByMgr(7839)
+
+--late
+
+create function getSalaryMoreThanGivenSal(@salary int)
+returns table
+AS
+RETURN
+(
+	select ename from emp where sal>@salary
+);
+
+select * from getSalaryMoreThanGivenSal(200)
